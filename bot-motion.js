@@ -1,27 +1,38 @@
 (() => {
   const start = () => {
-    for (const region of document.querySelectorAll('.motion-region')) {
-      if (region.dataset.motionReady === 'true') continue;
-      region.dataset.motionReady = 'true';
-      const control = region.querySelector('[data-motion-toggle]');
-      const updateVisibility = () => {
+    const regions = [...document.querySelectorAll('.motion-region')];
+    if (!regions.length || regions.every(region => region.dataset.motionReady === 'true')) return;
+    const controls = [...document.querySelectorAll('[data-motion-toggle]')];
+    let paused = false;
+    const updateVisibility = () => {
+      for (const region of regions) {
         region.dataset.pageHidden = String(document.hidden);
-      };
-      updateVisibility();
-      document.addEventListener('visibilitychange', updateVisibility);
-      if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver(([entry]) => {
-          region.dataset.inView = String(entry.isIntersecting);
-        }, { threshold: 0 });
-        observer.observe(region);
-      } else {
-        region.dataset.inView = 'true';
       }
-      control?.addEventListener('click', () => {
-        const paused = region.dataset.userPaused !== 'true';
-        region.dataset.userPaused = String(paused);
+    };
+    const updatePlayback = () => {
+      for (const region of regions) region.dataset.userPaused = String(paused);
+      for (const control of controls) {
         control.setAttribute('aria-pressed', String(paused));
         control.textContent = paused ? 'Resume animations' : 'Pause animations';
+      }
+    };
+    const observer = 'IntersectionObserver' in window
+      ? new IntersectionObserver(entries => {
+          for (const entry of entries) entry.target.dataset.inView = String(entry.isIntersecting);
+        }, { threshold: 0 })
+      : null;
+    for (const region of regions) {
+      region.dataset.motionReady = 'true';
+      if (observer) observer.observe(region);
+      else region.dataset.inView = 'true';
+    }
+    updateVisibility();
+    updatePlayback();
+    document.addEventListener('visibilitychange', updateVisibility);
+    for (const control of controls) {
+      control.addEventListener('click', () => {
+        paused = !paused;
+        updatePlayback();
       });
     }
   };
