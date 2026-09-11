@@ -157,9 +157,6 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
 .bot-accent { --bot-phase: -.6s; width: 86px; flex: 0 0 auto; pointer-events: none; user-select: none; line-height: 0; }
 .bot-accent .avatar { display: block; width: 100%; height: auto; overflow: visible; }
 .bot-accent .avatar * { animation-delay: var(--bot-phase) !important; }
-.hero-bot-one, .hero-bot-two { position: absolute; z-index: 2; width: clamp(68px, 7.5vw, 104px); }
-.hero-bot-one { top: 7%; left: 0; --bot-phase: -1.2s; }
-.hero-bot-two { right: 0; bottom: 8%; --bot-phase: -2.5s; }
 .section-kicker, .section-heading > .section-kicker { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 20px; margin-top: 0; }
 .section-kicker .bot-accent { width: 76px; --bot-phase: -1.8s; }
 .phone-stage { min-width: 0; width: 100%; }
@@ -173,9 +170,6 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
 .release-bot { position: absolute; left: 0; bottom: 0; width: 88px; --bot-phase: -1.4s; }
 @media (max-width: 850px) { .phone-stage { width: min(540px, 100%); margin-inline: auto; } }
 @media (max-width: 720px) {
-  .hero-bot-one, .hero-bot-two { width: 68px; }
-  .hero-bot-one { top: 2%; left: -5%; }
-  .hero-bot-two { right: -5%; bottom: 5%; }
   .section-kicker .bot-accent { width: 64px; }
   .phone-companions .bot-accent { width: 64px; }
   .team-heading { flex-direction: column; align-items: flex-start; gap: 18px; }
@@ -209,28 +203,34 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
 .tree-site .hero-art { position: absolute; width: var(--apple-size); max-width: none; top: calc(var(--hero-scene-width) * .267 + var(--bough-top) - var(--apple-size) * .15); left: auto; right: 0; margin: 0; }
 .tree-site .hero-apple { width: 100%; transform-origin: 50% 15%; transform: none; animation: apple-sway 8s ease-in-out infinite alternate; }
 .tree-site .art-caption { bottom: 20px; left: 20%; }
-.hero-perch { position: absolute; top: 0; left: auto; right: calc(var(--apple-size) / 2 - var(--hero-scene-width) * .167); width: var(--hero-scene-width); height: 220px; pointer-events: none; }
-.tree-site .hero-bot-one { top: calc(var(--hero-scene-width) * .19 - 228px); left: 15%; width: clamp(72px, 8vw, 116px); }
-.tree-site .hero-bot-two { top: calc(var(--hero-scene-width) * .127 - 207px); left: 44%; right: auto; bottom: auto; width: clamp(65px, 7vw, 100px); }
+.hero-fruits { position: absolute; top: 0; left: auto; right: calc(var(--apple-size) / 2 - var(--hero-scene-width) * .167); width: var(--hero-scene-width); pointer-events: none; }
+.branch-fruit { --fruit-size: clamp(58px, 6vw, 80px); --stem-length: clamp(18px, 2vw, 28px); position: absolute; z-index: 1; width: var(--fruit-size); height: var(--fruit-size); transform: translateX(-50%); pointer-events: none; }
+.branch-fruit .fruit-stem { position: absolute; top: -2px; left: 50%; width: calc(var(--stem-length) * .833333); height: var(--stem-length); max-width: none; transform: translateX(-50%); }
+.branch-fruit .bot-accent { position: absolute; left: calc(50% - var(--fruit-size) * var(--fruit-tip-x)); top: calc(var(--stem-length) * .94 - var(--fruit-size) * var(--fruit-tip-y) - 2px); width: var(--fruit-size); }
+/* Keep the stem tip attached while the supplied facial expressions play. */
+.branch-fruit .avatar .avatar-emotion-body { animation: none !important; transform: none !important; }
+.branch-fruit.hero-fruit-one { --fruit-size: clamp(72px, 8vw, 116px); left: 38%; top: calc(var(--hero-scene-width) * .144 + var(--bough-top)); }
+.branch-fruit.hero-fruit-two { --fruit-size: clamp(65px, 7vw, 100px); left: 52%; top: calc(var(--hero-scene-width) * .138 + var(--bough-top)); }
 .tree-site .principle-strip { background: #080909c9; }
 .tree-site .tree-section { padding-top: calc(var(--divider-height) + 58px); border-top: 0; }
 .tree-site .bot-showcase { border-bottom: 0; }
-.branch-short { --branch-reach: .5; --perch-bottom: 39%; --divider-height: clamp(115px, 12vw, 190px); }
-.branch-medium { --branch-reach: .73; --perch-bottom: 61%; --divider-height: clamp(145px, 15vw, 240px); }
+.branch-short { --branch-reach: .5; --fruit-first-x: 46%; --fruit-first-y: 58%; --divider-height: clamp(115px, 12vw, 190px); }
+.branch-medium { --branch-reach: .73; --fruit-first-x: 27%; --fruit-first-y: 46.4%; --divider-height: clamp(145px, 15vw, 240px); }
 .tree-divider { position: absolute; top: 8px; left: calc(-1 * var(--content-inset)); width: calc(100% * var(--branch-reach, 1) + var(--content-inset)); height: var(--divider-height); pointer-events: none; }
 .tree-divider--right { left: auto; right: calc(-1 * var(--content-inset)); }
 .divider-bough { width: 100%; height: 100%; }
 .tree-divider--right .divider-bough { transform: scaleX(-1); }
 .divider-bough img { width: 100%; height: 100%; max-width: none; object-fit: fill; transform: none; }
-.perch-characters { position: absolute; left: 23%; bottom: var(--perch-bottom, 48%); display: flex; align-items: flex-end; gap: 12px; }
-.tree-divider--right .perch-characters { left: auto; right: 23%; flex-direction: row-reverse; }
-.perch-characters .bot-accent { width: clamp(58px, 6vw, 80px); }
-.perch-characters .bot-accent + .bot-accent { --bot-phase: -2.1s; transform: translateY(-3px); }
-.branch-short .perch-characters .bot-accent + .bot-accent { transform: translateY(calc(var(--divider-height) * -.1)); }
+/* Coordinates follow the underside of each branch image, including mirrored art. */
+.tree-divider > .branch-fruit-first { left: var(--fruit-first-x, 28%); top: var(--fruit-first-y, 57.4%); }
+.tree-divider > .branch-fruit-second { left: 40%; top: 42.9%; --stem-length: clamp(24px, 3vw, 38px); }
+.tree-divider--right > .branch-fruit-first { left: calc(100% - var(--fruit-first-x, 28%)); }
+.tree-divider--right > .branch-fruit-second { left: 60%; }
 .tree-site .phone-section > .tree-divider { position: absolute; }
 .tree-ground { position: absolute; z-index: 1; pointer-events: none; bottom: 0; left: 0; width: 100%; height: clamp(110px, 11vw, 170px); }
 .tree-grass { position: absolute; inset: 0; background: url('./tree/roots.png') right bottom / max(100vw, 1050px) auto no-repeat; mask-image: linear-gradient(transparent, #000 60%); }
-.tree-ground .root-seed { position: absolute; width: clamp(76px, 8vw, 116px); left: 14%; bottom: 24px; }
+.tree-ground .root-seed, .tree-ground .root-coffee { position: absolute; width: clamp(76px, 8vw, 116px); left: 14%; bottom: 24px; }
+.tree-ground .root-coffee { left: calc(14% + 120px); width: clamp(58px, 6vw, 80px); }
 .tree-site .release-section { background: none; border: 0; border-radius: 0; padding: calc(var(--divider-height) + 58px) 0 60px; gap: 45px; }
 .tree-site .site-footer { padding-left: 0; padding-bottom: clamp(160px, 17vw, 260px); }
 .tree-site .independent-note { max-width: 100%; }
@@ -242,8 +242,6 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   .tree-site .site-header nav { gap: 18px; }
   .tree-site .site-header { gap: 18px; }
   .tree-site .hero { padding-top: 150px; min-height: 650px; }
-  .tree-site .hero-bot-one { top: calc(var(--hero-scene-width) * .19 - 174px); }
-  .tree-site .hero-bot-two { top: calc(var(--hero-scene-width) * .127 - 155px); }
   .tree-site .art-caption { left: 17%; font-size: .6875rem; gap: 12px; }
 }
 @media (max-width: 900px) {
@@ -264,17 +262,17 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   .tree-site .hero h1 { font-size: clamp(2.65rem, 8.3vw, 4rem); margin-top: 20px; }
   .tree-site .hero-description { max-width: 100%; font-size: 1rem; margin-top: 22px; }
   .tree-site .art-caption { display: none; }
-  .tree-site .hero-bot-one { top: calc(var(--hero-scene-width) * .19 - 58px); left: 15%; width: 56px; }
-  .tree-site .hero-bot-two { top: calc(var(--hero-scene-width) * .127 - 55px); left: 41%; width: 46px; }
-  .hero-bough, .hero-perch { left: calc(-1 * var(--content-inset)); right: auto; }
-  .hero-perch { height: 160px; }
+  .branch-fruit { --fruit-size: 42px; --stem-length: 16px; }
+  .branch-fruit.hero-fruit-one { --fruit-size: 56px; }
+  .branch-fruit.hero-fruit-two { --fruit-size: 46px; }
+  .hero-bough, .hero-fruits { left: calc(-1 * var(--content-inset)); right: auto; }
   .tree-site .hero-art { left: calc(var(--hero-scene-width) * .833 - var(--content-inset) - var(--apple-size) / 2); right: auto; }
   .tree-site .tree-section { padding-top: calc(var(--divider-height) + 40px); }
   .branch-short { --divider-height: 85px; }
   .branch-medium { --divider-height: 100px; }
-  .perch-characters { gap: 6px; }
-  .perch-characters .bot-accent { width: 42px; }
+  .tree-divider > .branch-fruit-second { --stem-length: 20px; }
   .tree-ground .root-seed { width: 76px; left: 24px; bottom: 24px; }
+  .tree-ground .root-coffee { left: 114px; width: 58px; }
   .tree-site .release-section { padding-block: calc(var(--divider-height) + 40px) 0; gap: 10px; }
   .tree-site .site-footer { padding-left: 0; padding-bottom: 190px; }
   .tree-site .site-footer > p:not(.independent-note) { margin-top: 0; }
