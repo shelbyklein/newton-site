@@ -187,7 +187,6 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   --apple-size: min(39vw, 540px);
   --hero-scene-width: min(100vw, 1440px);
   --bough-top: -118px;
-  --divider-height: clamp(170px, 18vw, 300px);
   position: relative;
   isolation: isolate;
   overflow: clip;
@@ -199,7 +198,7 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
 /* The apple occupies the right content column. The branch's hanging twig is
    at 83.3% across the artwork, so the same anchor positions the whole scene. */
 .hero-bough { position: absolute; z-index: 0; pointer-events: none; top: var(--bough-top); left: auto; right: calc(var(--apple-size) / 2 - var(--hero-scene-width) * .167); width: var(--hero-scene-width); mask-image: linear-gradient(to right, transparent, #000 8%); }
-.hero-bough img { width: 100%; transform-origin: 0 32%; animation: bough-breathe 9s ease-in-out infinite alternate; }
+.hero-bough img { width: 100%; height: auto; transform-origin: 0 32%; animation: bough-breathe 9s ease-in-out infinite alternate; }
 .tree-site .hero-art { position: absolute; width: var(--apple-size); max-width: none; top: calc(var(--hero-scene-width) * .267 + var(--bough-top) - var(--apple-size) * .15); left: auto; right: 0; margin: 0; }
 .tree-site .hero-apple { width: 100%; transform-origin: 50% 15%; transform: none; animation: apple-sway 8s ease-in-out infinite alternate; }
 .tree-site .art-caption { bottom: 20px; left: 20%; }
@@ -212,15 +211,23 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
 .branch-fruit.hero-fruit-one { --fruit-size: clamp(72px, 8vw, 116px); left: 38%; top: calc(var(--hero-scene-width) * .144 + var(--bough-top)); }
 .branch-fruit.hero-fruit-two { --fruit-size: clamp(65px, 7vw, 100px); left: 52%; top: calc(var(--hero-scene-width) * .138 + var(--bough-top)); }
 .tree-site .principle-strip { background: #080909c9; }
-.tree-site .tree-section { padding-top: calc(var(--divider-height) + 58px); border-top: 0; }
+.tree-site .tree-section {
+  --branch-content-width: min(1240px, calc(100vw - var(--page-edge) * 2));
+  --divider-width: min(var(--branch-max-width, 2172px), calc(var(--branch-content-width) * var(--branch-reach, 1) + var(--content-inset)));
+  --divider-height: calc(var(--divider-width) / 3);
+  padding-top: calc(var(--divider-height) + 58px);
+  border-top: 0;
+}
 .tree-site .bot-showcase { border-bottom: 0; }
-.branch-short { --branch-reach: .5; --fruit-first-x: 46%; --fruit-first-y: 58%; --divider-height: clamp(115px, 12vw, 190px); }
-.branch-medium { --branch-reach: .73; --fruit-first-x: 27%; --fruit-first-y: 46.4%; --divider-height: clamp(145px, 15vw, 240px); }
-.tree-divider { position: absolute; top: 8px; left: calc(-1 * var(--content-inset)); width: calc(100% * var(--branch-reach, 1) + var(--content-inset)); height: var(--divider-height); pointer-events: none; }
+.branch-short { --branch-reach: .5; --branch-max-width: 1086px; --fruit-first-x: 46%; --fruit-first-y: 58%; }
+.branch-medium { --branch-reach: .73; --branch-max-width: 1586px; --fruit-first-x: 27%; --fruit-first-y: 46.4%; }
+/* All divider assets are 2172 × 724. Size their scene proportionally so the
+   branch, percentage-based fruit anchors and section clearance stay in sync. */
+.tree-divider { position: absolute; top: 8px; left: calc(-1 * var(--content-inset)); width: var(--divider-width); height: var(--divider-height); aspect-ratio: 3 / 1; pointer-events: none; }
 .tree-divider--right { left: auto; right: calc(-1 * var(--content-inset)); }
-.divider-bough { width: 100%; height: 100%; }
+.divider-bough { width: 100%; }
 .tree-divider--right .divider-bough { transform: scaleX(-1); }
-.divider-bough img { width: 100%; height: 100%; max-width: none; object-fit: fill; transform: none; }
+.divider-bough img { display: block; width: 100%; height: auto; max-width: none; transform: none; }
 /* Coordinates follow the underside of each branch image, including mirrored art. */
 .tree-divider > .branch-fruit-first { left: var(--fruit-first-x, 28%); top: var(--fruit-first-y, 57.4%); }
 .tree-divider > .branch-fruit-second { left: 40%; top: 42.9%; --stem-length: clamp(24px, 3vw, 38px); }
@@ -252,7 +259,7 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   .tree-site .hero h1 { font-size: clamp(2.6rem, 5.4vw, 4.0625rem); }
 }
 @media (max-width: 720px) {
-  .tree-site { --page-edge: 20px; --divider-height: 115px; --bough-top: -13px; --apple-size: clamp(130px, 38vw, 190px); }
+  .tree-site { --page-edge: 20px; --bough-top: -13px; --apple-size: clamp(130px, 38vw, 190px); }
   .tree-site .site-header { gap: 8px; min-height: 88px; }
   .tree-site .wordmark { font-size: 1.5rem; gap: 5px; }
   .tree-site .wordmark img { width: 35px; height: 35px; }
@@ -268,8 +275,6 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   .hero-bough, .hero-fruits { left: calc(-1 * var(--content-inset)); right: auto; }
   .tree-site .hero-art { left: calc(var(--hero-scene-width) * .833 - var(--content-inset) - var(--apple-size) / 2); right: auto; }
   .tree-site .tree-section { padding-top: calc(var(--divider-height) + 40px); }
-  .branch-short { --divider-height: 85px; }
-  .branch-medium { --divider-height: 100px; }
   .tree-divider > .branch-fruit-second { --stem-length: 20px; }
   .tree-ground .root-seed { width: 76px; left: 24px; bottom: 24px; }
   .tree-ground .root-coffee { left: 114px; width: 58px; }
