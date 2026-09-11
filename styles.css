@@ -218,12 +218,15 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
 .tree-site .principle-strip { background: #080909c9; }
 .tree-site .tree-section { padding-top: calc(var(--divider-height) + 58px); border-top: 0; }
 .tree-site .bot-showcase { border-bottom: 0; }
-.tree-divider { position: absolute; top: 8px; left: calc(-1 * var(--content-inset)); width: calc(100% + var(--content-inset)); height: var(--divider-height); pointer-events: none; }
+.branch-short { --branch-reach: .5; --perch-bottom: 39%; --divider-height: clamp(115px, 12vw, 190px); }
+.branch-medium { --branch-reach: .73; --perch-bottom: 61%; --divider-height: clamp(145px, 15vw, 240px); }
+.tree-divider { position: absolute; top: 8px; left: calc(-1 * var(--content-inset)); width: calc(100% * var(--branch-reach, 1) + var(--content-inset)); height: var(--divider-height); pointer-events: none; }
 .divider-bough { width: 100%; height: 100%; }
 .divider-bough img { width: 100%; height: 100%; max-width: none; object-fit: fill; transform: none; mask-image: linear-gradient(to right, transparent, #000 6%); }
-.perch-characters { position: absolute; left: 23%; bottom: 48%; display: flex; align-items: flex-end; gap: 12px; }
+.perch-characters { position: absolute; left: 23%; bottom: var(--perch-bottom, 48%); display: flex; align-items: flex-end; gap: 12px; }
 .perch-characters .bot-accent { width: clamp(58px, 6vw, 80px); }
 .perch-characters .bot-accent + .bot-accent { --bot-phase: -2.1s; transform: translateY(-3px); }
+.branch-short .perch-characters .bot-accent + .bot-accent { transform: translateY(calc(var(--divider-height) * -.1)); }
 .tree-site .phone-section > .tree-divider { position: absolute; }
 .tree-ground { position: absolute; z-index: 1; pointer-events: none; bottom: 0; left: 0; width: 100%; }
 .tree-ground > img { position: relative; width: min(100%, 1050px); mask-image: linear-gradient(transparent 58%, #000 78%); }
@@ -266,6 +269,8 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   .tree-site .hero-bot-two { top: calc(12.7vw - 55px); left: 41%; width: 46px; }
   .hero-perch { height: 160px; }
   .tree-site .tree-section { padding-top: calc(var(--divider-height) + 40px); }
+  .branch-short { --divider-height: 85px; }
+  .branch-medium { --divider-height: 100px; }
   .perch-characters { gap: 6px; }
   .perch-characters .bot-accent { width: 42px; }
   .tree-ground > img { width: 520px; max-width: none; mask-image: linear-gradient(transparent 58%, #000 78%); }
