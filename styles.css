@@ -185,12 +185,11 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   .release-bot { width: 64px; left: -20px; }
 }
 
-/* A single tree connects the story. Artwork is decorative; content stays in its own column. */
+/* Branches frame centered content from both edges without a visible trunk. */
 .tree-site {
-  --tree-gutter: clamp(132px, 14vw, 230px);
   --page-edge: clamp(28px, 4vw, 76px);
-  --content-width: min(1240px, calc(100% - var(--tree-gutter) - var(--page-edge)));
-  --content-inset: max(var(--tree-gutter), calc((100vw - 1240px + var(--tree-gutter) - var(--page-edge)) / 2));
+  --content-width: min(1240px, calc(100% - var(--page-edge) * 2));
+  --content-inset: max(var(--page-edge), calc((100vw - 1240px) / 2));
   --apple-size: min(39vw, 540px);
   --bough-top: -118px;
   --divider-height: clamp(170px, 18vw, 300px);
@@ -198,12 +197,7 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   isolation: isolate;
   overflow: clip;
 }
-.tree-site .wrap { position: relative; z-index: 2; width: var(--content-width); margin-left: var(--content-inset); margin-right: auto; }
-/* Show only the bare bark strip; the generated image's unused canvas is opaque. */
-.tree-trunk { position: absolute; z-index: 1; inset: 0 auto 0 0; width: calc(var(--tree-gutter) * .76); overflow: hidden; pointer-events: none; mask-image: linear-gradient(to right, #000 84%, transparent); }
-.trunk-segment { width: 100%; aspect-ratio: .09; background: url('./tree/trunk.png') left top / 740.74074074% 100% no-repeat; }
-.trunk-segment:nth-child(even) { transform: scaleY(-1); }
-
+.tree-site .wrap { position: relative; z-index: 2; width: var(--content-width); margin-inline: auto; }
 .tree-site .site-header { z-index: 4; border-bottom-color: #ffffff12; }
 .tree-site .hero { display: block; min-height: 740px; padding-block: 200px 88px; }
 .hero-copy { position: relative; z-index: 3; max-width: 54%; }
@@ -221,25 +215,27 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
 .branch-short { --branch-reach: .5; --perch-bottom: 39%; --divider-height: clamp(115px, 12vw, 190px); }
 .branch-medium { --branch-reach: .73; --perch-bottom: 61%; --divider-height: clamp(145px, 15vw, 240px); }
 .tree-divider { position: absolute; top: 8px; left: calc(-1 * var(--content-inset)); width: calc(100% * var(--branch-reach, 1) + var(--content-inset)); height: var(--divider-height); pointer-events: none; }
+.tree-divider--right { left: auto; right: calc(-1 * var(--content-inset)); }
 .divider-bough { width: 100%; height: 100%; }
-.divider-bough img { width: 100%; height: 100%; max-width: none; object-fit: fill; transform: none; mask-image: linear-gradient(to right, transparent, #000 6%); }
+.tree-divider--right .divider-bough { transform: scaleX(-1); }
+.divider-bough img { width: 100%; height: 100%; max-width: none; object-fit: fill; transform: none; }
 .perch-characters { position: absolute; left: 23%; bottom: var(--perch-bottom, 48%); display: flex; align-items: flex-end; gap: 12px; }
+.tree-divider--right .perch-characters { left: auto; right: 23%; flex-direction: row-reverse; }
 .perch-characters .bot-accent { width: clamp(58px, 6vw, 80px); }
 .perch-characters .bot-accent + .bot-accent { --bot-phase: -2.1s; transform: translateY(-3px); }
 .branch-short .perch-characters .bot-accent + .bot-accent { transform: translateY(calc(var(--divider-height) * -.1)); }
 .tree-site .phone-section > .tree-divider { position: absolute; }
-.tree-ground { position: absolute; z-index: 1; pointer-events: none; bottom: 0; left: 0; width: 100%; }
-.tree-ground > img { position: relative; width: min(100%, 1050px); mask-image: linear-gradient(transparent 58%, #000 78%); }
-.tree-grass { position: absolute; left: 0; bottom: 0; width: 100%; height: clamp(70px, 8vw, 130px); background: url('./tree/roots.png') right bottom / max(100vw, 1050px) auto no-repeat; mask-image: linear-gradient(transparent, #000 45%); }
-.tree-ground .root-seed { position: absolute; width: clamp(84px, 9vw, 150px); left: 15%; bottom: 11%; }
+.tree-ground { position: absolute; z-index: 1; pointer-events: none; bottom: 0; left: 0; width: 100%; height: clamp(110px, 11vw, 170px); }
+.tree-grass { position: absolute; inset: 0; background: url('./tree/roots.png') right bottom / max(100vw, 1050px) auto no-repeat; mask-image: linear-gradient(transparent, #000 60%); }
+.tree-ground .root-seed { position: absolute; width: clamp(76px, 8vw, 116px); left: 14%; bottom: 24px; }
 .tree-site .release-section { background: none; border: 0; border-radius: 0; padding: calc(var(--divider-height) + 58px) 0 60px; gap: 45px; }
-.tree-site .site-footer { padding-left: 100px; padding-bottom: clamp(190px, 21vw, 370px); }
+.tree-site .site-footer { padding-left: 0; padding-bottom: clamp(160px, 17vw, 260px); }
 .tree-site .independent-note { max-width: 100%; }
 .motion-region:not([data-in-view="true"]) .tree-motion, .motion-region[data-user-paused="true"] .tree-motion, .motion-region[data-page-hidden="true"] .tree-motion { animation-play-state: paused !important; }
 @keyframes bough-breathe { from { transform: rotate(-.22deg); } to { transform: rotate(.22deg); } }
 @keyframes apple-sway { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
 @media (max-width: 1100px) {
-  .tree-site { --tree-gutter: 144px; --page-edge: 32px; --bough-top: -80px; }
+  .tree-site { --page-edge: 32px; --bough-top: -80px; }
   .tree-site .site-header nav { gap: 18px; }
   .tree-site .site-header { gap: 18px; }
   .tree-site .hero { padding-top: 150px; min-height: 650px; }
@@ -255,7 +251,7 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   .tree-site .hero h1 { font-size: clamp(2.6rem, 5.4vw, 4.0625rem); }
 }
 @media (max-width: 720px) {
-  .tree-site { --tree-gutter: 52px; --page-edge: 20px; --divider-height: 115px; --bough-top: -13px; --apple-size: clamp(130px, 38vw, 190px); }
+  .tree-site { --page-edge: 20px; --divider-height: 115px; --bough-top: -13px; --apple-size: clamp(130px, 38vw, 190px); }
   .tree-site .site-header { gap: 8px; min-height: 88px; }
   .tree-site .wordmark { font-size: 1.5rem; gap: 5px; }
   .tree-site .wordmark img { width: 35px; height: 35px; }
@@ -273,15 +269,14 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   .branch-medium { --divider-height: 100px; }
   .perch-characters { gap: 6px; }
   .perch-characters .bot-accent { width: 42px; }
-  .tree-ground > img { width: 520px; max-width: none; mask-image: linear-gradient(transparent 58%, #000 78%); }
-  .tree-ground .root-seed { width: 84px; left: 92px; bottom: 74px; }
+  .tree-ground .root-seed { width: 76px; left: 24px; bottom: 24px; }
   .tree-site .release-section { padding-block: calc(var(--divider-height) + 40px) 0; gap: 10px; }
-  .tree-site .site-footer { padding-left: 0; padding-bottom: 310px; }
+  .tree-site .site-footer { padding-left: 0; padding-bottom: 190px; }
   .tree-site .site-footer > p:not(.independent-note) { margin-top: 0; }
   .tree-site .bot-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 370px) {
-  .tree-site { --tree-gutter: 44px; --page-edge: 16px; }
+  .tree-site { --page-edge: 16px; }
   .tree-site .header-cta { gap: 4px; padding-inline: 8px; }
   .tree-site .wordmark { font-size: 1.35rem; }
   .tree-site .wordmark img { width: 30px; height: 30px; }
