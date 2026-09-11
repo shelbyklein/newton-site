@@ -193,13 +193,17 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   --content-inset: max(var(--tree-gutter), calc((100vw - 1240px + var(--tree-gutter) - var(--page-edge)) / 2));
   --apple-size: min(39vw, 540px);
   --bough-top: -118px;
-  --trunk-tile: clamp(540px, 52vw, 920px);
+  --divider-height: clamp(170px, 18vw, 300px);
   position: relative;
   isolation: isolate;
   overflow: clip;
 }
 .tree-site .wrap { position: relative; z-index: 2; width: var(--content-width); margin-left: var(--content-inset); margin-right: auto; }
-.tree-trunk { position: absolute; z-index: 1; inset: 0 auto 120px 0; width: var(--tree-gutter); background: url('./tree/trunk.png') left top / var(--trunk-tile) auto repeat-y; pointer-events: none; mask-image: linear-gradient(#000 calc(100% - 900px), transparent); }
+/* Show only the bare bark strip; the generated image's unused canvas is opaque. */
+.tree-trunk { position: absolute; z-index: 1; inset: 0 auto 0 0; width: calc(var(--tree-gutter) * .76); overflow: hidden; pointer-events: none; mask-image: linear-gradient(to right, #000 84%, transparent); }
+.trunk-segment { width: 100%; aspect-ratio: .09; background: url('./tree/trunk.png') left top / 740.74074074% 100% no-repeat; }
+.trunk-segment:nth-child(even) { transform: scaleY(-1); }
+
 .tree-site .site-header { z-index: 4; border-bottom-color: #ffffff12; }
 .tree-site .hero { display: block; min-height: 740px; padding-block: 200px 88px; }
 .hero-copy { position: relative; z-index: 3; max-width: 54%; }
@@ -212,26 +216,27 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
 .tree-site .hero-bot-one { top: calc(19vw - 228px); left: 15%; width: clamp(72px, 8vw, 116px); }
 .tree-site .hero-bot-two { top: calc(12.7vw - 207px); left: 44%; right: auto; bottom: auto; width: clamp(65px, 7vw, 100px); }
 .tree-site .principle-strip { background: #080909c9; }
-.tree-site .tree-section { padding-top: 205px; }
-.tree-perch { position: absolute; top: 20px; left: calc(-1 * var(--content-inset)); width: min(530px, calc(var(--content-inset) + 300px)); height: 170px; pointer-events: none; }
-.perch-bough { width: 100%; height: 100%; }
-.perch-bough img { width: 100%; transform-origin: 0 32%; animation: bough-breathe 11s ease-in-out infinite alternate; }
-.perch-characters { position: absolute; left: 36%; top: -3%; display: flex; align-items: flex-end; gap: 12px; }
-.perch-characters .bot-accent { width: 80px; }
-.perch-characters .bot-accent + .bot-accent { --bot-phase: -2.1s; transform: translateY(9px); }
-.tree-site .phone-section > .tree-perch { position: absolute; }
+.tree-site .tree-section { padding-top: calc(var(--divider-height) + 58px); border-top: 0; }
+.tree-site .bot-showcase { border-bottom: 0; }
+.tree-divider { position: absolute; top: 8px; left: calc(-1 * var(--content-inset)); width: calc(100% + var(--content-inset)); height: var(--divider-height); pointer-events: none; }
+.divider-bough { width: 100%; height: 100%; }
+.divider-bough img { width: 100%; height: 100%; max-width: none; object-fit: fill; transform: none; mask-image: linear-gradient(to right, transparent, #000 6%); }
+.perch-characters { position: absolute; left: 23%; bottom: 48%; display: flex; align-items: flex-end; gap: 12px; }
+.perch-characters .bot-accent { width: clamp(58px, 6vw, 80px); }
+.perch-characters .bot-accent + .bot-accent { --bot-phase: -2.1s; transform: translateY(-3px); }
+.tree-site .phone-section > .tree-divider { position: absolute; }
 .tree-ground { position: absolute; z-index: 1; pointer-events: none; bottom: 0; left: 0; width: 100%; }
-.tree-ground > img { position: relative; width: min(100%, 1050px); mask-image: linear-gradient(transparent, #000 24%); }
+.tree-ground > img { position: relative; width: min(100%, 1050px); mask-image: linear-gradient(transparent 58%, #000 78%); }
 .tree-grass { position: absolute; left: 0; bottom: 0; width: 100%; height: clamp(70px, 8vw, 130px); background: url('./tree/roots.png') right bottom / max(100vw, 1050px) auto no-repeat; mask-image: linear-gradient(transparent, #000 45%); }
 .tree-ground .root-seed { position: absolute; width: clamp(84px, 9vw, 150px); left: 15%; bottom: 11%; }
-.tree-site .release-section { background: none; border: 0; border-top: 1px solid var(--border); border-radius: 0; padding: 70px 0 60px; gap: 45px; }
+.tree-site .release-section { background: none; border: 0; border-radius: 0; padding: calc(var(--divider-height) + 58px) 0 60px; gap: 45px; }
 .tree-site .site-footer { padding-left: 100px; padding-bottom: clamp(190px, 21vw, 370px); }
 .tree-site .independent-note { max-width: 100%; }
 .motion-region:not([data-in-view="true"]) .tree-motion, .motion-region[data-user-paused="true"] .tree-motion, .motion-region[data-page-hidden="true"] .tree-motion { animation-play-state: paused !important; }
 @keyframes bough-breathe { from { transform: rotate(-.22deg); } to { transform: rotate(.22deg); } }
 @keyframes apple-sway { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
 @media (max-width: 1100px) {
-  .tree-site { --tree-gutter: 144px; --page-edge: 32px; --trunk-tile: 530px; --bough-top: -80px; }
+  .tree-site { --tree-gutter: 144px; --page-edge: 32px; --bough-top: -80px; }
   .tree-site .site-header nav { gap: 18px; }
   .tree-site .site-header { gap: 18px; }
   .tree-site .hero { padding-top: 150px; min-height: 650px; }
@@ -247,7 +252,7 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   .tree-site .hero h1 { font-size: clamp(2.6rem, 5.4vw, 4.0625rem); }
 }
 @media (max-width: 720px) {
-  .tree-site { --tree-gutter: 52px; --page-edge: 20px; --trunk-tile: 185px; --bough-top: -13px; --apple-size: clamp(130px, 38vw, 190px); }
+  .tree-site { --tree-gutter: 52px; --page-edge: 20px; --divider-height: 115px; --bough-top: -13px; --apple-size: clamp(130px, 38vw, 190px); }
   .tree-site .site-header { gap: 8px; min-height: 88px; }
   .tree-site .wordmark { font-size: 1.5rem; gap: 5px; }
   .tree-site .wordmark img { width: 35px; height: 35px; }
@@ -260,21 +265,18 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
   .tree-site .hero-bot-one { top: calc(19vw - 58px); left: 15%; width: 56px; }
   .tree-site .hero-bot-two { top: calc(12.7vw - 55px); left: 41%; width: 46px; }
   .hero-perch { height: 160px; }
-  .tree-site .tree-section { padding-top: 155px; }
-  .tree-perch { top: 20px; width: min(340px, calc(100vw - 20px)); height: 110px; }
-  .perch-characters { top: -3%; left: 34%; gap: 8px; }
-  .perch-characters .bot-accent { width: 54px; }
-  .perch-characters .bot-accent + .bot-accent { transform: translateY(4px); }
-  .tree-trunk { bottom: 0; mask-image: linear-gradient(#000 calc(100% - 330px), transparent); }
-  .tree-ground > img { width: 520px; max-width: none; mask-image: linear-gradient(transparent, #000 36%); }
+  .tree-site .tree-section { padding-top: calc(var(--divider-height) + 40px); }
+  .perch-characters { gap: 6px; }
+  .perch-characters .bot-accent { width: 42px; }
+  .tree-ground > img { width: 520px; max-width: none; mask-image: linear-gradient(transparent 58%, #000 78%); }
   .tree-ground .root-seed { width: 84px; left: 92px; bottom: 74px; }
-  .tree-site .release-section { padding-block: 50px 0; gap: 10px; }
+  .tree-site .release-section { padding-block: calc(var(--divider-height) + 40px) 0; gap: 10px; }
   .tree-site .site-footer { padding-left: 0; padding-bottom: 310px; }
   .tree-site .site-footer > p:not(.independent-note) { margin-top: 0; }
   .tree-site .bot-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 370px) {
-  .tree-site { --tree-gutter: 44px; --page-edge: 16px; --trunk-tile: 155px; }
+  .tree-site { --tree-gutter: 44px; --page-edge: 16px; }
   .tree-site .header-cta { gap: 4px; padding-inline: 8px; }
   .tree-site .wordmark { font-size: 1.35rem; }
   .tree-site .wordmark img { width: 30px; height: 30px; }
