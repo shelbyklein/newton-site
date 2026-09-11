@@ -197,8 +197,23 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
 .hero-copy { position: relative; z-index: 3; max-width: 54%; }
 /* The apple occupies the right content column. The branch's hanging twig is
    at 83.3% across the artwork, so the same anchor positions the whole scene. */
-.hero-bough { position: absolute; z-index: 0; pointer-events: none; top: var(--bough-top); left: auto; right: calc(var(--apple-size) / 2 - var(--hero-scene-width) * .167); width: var(--hero-scene-width); mask-image: linear-gradient(to right, transparent, #000 8%); }
-.hero-bough img { width: 100%; height: auto; transform-origin: 0 32%; animation: bough-breathe 9s ease-in-out infinite alternate; }
+.hero-bough { position: absolute; z-index: 0; pointer-events: none; top: var(--bough-top); left: auto; right: calc(var(--apple-size) / 2 - var(--hero-scene-width) * .167); width: var(--hero-scene-width); }
+.hero-bough-art { position: relative; transform-origin: 0 32%; animation: bough-breathe 9s ease-in-out infinite alternate; }
+.hero-bough img { width: 100%; height: auto; }
+@media (min-width: 1600px) {
+  /* Extend only the exposed base. The original branch and all fruit anchors
+     retain their capped scene size; extra reach also covers the sway at 4K+. */
+  .hero-bough-art::before {
+    --extension-width: max(calc(var(--hero-scene-width) * 2), calc((100vw - var(--content-inset) - var(--apple-size) / 2 - var(--hero-scene-width) * .833 + 48px) / .41));
+    content: ''; position: absolute;
+    left: calc(var(--extension-width) * -.41); top: calc(var(--hero-scene-width) * .01);
+    width: var(--extension-width); height: calc(var(--hero-scene-width) * .5);
+    background: var(--background) url('./tree/branch-left-continuation.png') center / 100% 100% no-repeat;
+    background-blend-mode: screen;
+    mask-image: linear-gradient(to right, #000 41%, transparent calc(41% + var(--hero-scene-width) * .04));
+  }
+  .hero-bough img { position: relative; mask-image: linear-gradient(to right, transparent, #000 4%); }
+}
 .tree-site .hero-art { position: absolute; width: var(--apple-size); max-width: none; top: calc(var(--hero-scene-width) * .267 + var(--bough-top) - var(--apple-size) * .15); left: auto; right: 0; margin: 0; }
 .tree-site .hero-apple { width: 100%; transform-origin: 50% 15%; transform: none; animation: apple-sway 8s ease-in-out infinite alternate; }
 .tree-site .art-caption { bottom: 20px; left: 20%; }
