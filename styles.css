@@ -133,6 +133,10 @@ h3 { font-size: 1.25rem; letter-spacing: -.03em; font-weight: 500; margin-top: 2
 .insight-copy article + article { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
 .insight-copy article > p { margin-top: 15px; color: #a7aaa7; line-height: 1.8; }
 .insight-figure { margin-top: 0; }
+.examples { margin-top: 48px; max-width: 720px; }
+.examples ul { list-style: none; padding: 0; margin: 18px 0 0; }
+.examples li { display: flex; gap: 12px; align-items: flex-start; color: #c2cbb9; line-height: 1.7; padding: 12px 0; border-top: 1px solid var(--border); }
+.examples li svg { flex: none; margin-top: 6px; color: #a7b19f; }
 .topic-tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 22px 0 0; }
 .topic-tags li { padding: 5px 10px; border: 1px solid #3a4534; border-radius: 5px; font-size: .8125rem; color: #c2cbb9; }
 .runtime-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-top: 40px; }
